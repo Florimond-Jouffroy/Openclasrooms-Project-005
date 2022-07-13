@@ -1,0 +1,6 @@
+Options +FollowSymlinks
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^public/(.*)$ public/index.php?action=$1 [QSA,L]

@@ -1,0 +1,50 @@
+{% extends "layoutAdmin.html" %}
+
+{% block nav %}
+    
+    <a href="{{ url('gestionPosts') }}" class="list-group-item list-group-item-action text-light bg-dark">Gestion Articles</a>
+    <a href="{{ url('gestionComments') }}" class="list-group-item list-group-item-action text-light bg-dark ">Gestion Comments</a>
+    <a href="{{ url('gestionUsers') }}" class="list-group-item list-group-item-action text-light bg-dark activAdmin">Gestion Users</a>
+{% endblock %}
+
+{% block content %}
+
+    <div class="mb-4">
+        <a href="{{ url('gestionUsers') }}" class="btn btn-dark m-1" role="button">Retour</a>
+        <a href="{{ url('gestionUsers/update', [user.id]) }}" class="btn btn-secondary" role="button">Modifier</a>
+        <a href="{{ url('gestionUsers/updateUserType', [user.id]) }}" class="btn btn-secondary" role="button">Changer UserType</a>
+        <a href="{{ url('gestionUsers/delete', [user.id]) }}" class="btn btn-danger float-right" role="button">Supprimer</a>
+    </div>
+    <hr class="border-light">
+
+    <div class="card p-4">
+
+        <div class="form-group">
+            <label for="firstname">Firstname</label>
+            <input type="text" name="firstname" id="firstname" value="{{ user.firstname }}" class="form-control" disabled>
+        </div>
+        <div class="form-group">
+            <label for="lastname">Lastname</label>
+            <input type="text" name="lastname" id="lastname" value="{{ user.lastname }}" class="form-control" disabled>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="{{ user.email }}" class="form-control" disabled>
+        </div>
+        <div class="form-group">
+            <label for="user_type">User type</label>
+            <select class="form-control" id="user_type" name="user_type" disabled>
+                {% if user.user_type == 1 %}
+                    <option value="0">No Admin</option>
+                    <option value="1" selected>Admin</option>
+                {% else %}
+                    <option value="0" selected>No Admin</option>
+                    <option value="1">Admin</option>
+                {% endif %}
+            </select>
+        </div>
+
+    </div>
+
+
+{% endblock %}

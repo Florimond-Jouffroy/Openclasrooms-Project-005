@@ -1,0 +1,56 @@
+{% extends "layoutAdmin.html" %}
+
+{% block nav %}
+    
+    <a href="{{ url('gestionPosts') }}" class="list-group-item list-group-item-action text-light bg-dark ">Gestion Articles</a>
+    <a href="{{ url('gestionComments') }}" class="list-group-item list-group-item-action text-light bg-dark ">Gestion Comments</a>
+    <a href="{{ url('gestionUsers') }}" class="list-group-item list-group-item-action text-light bg-dark activAdmin">Gestion Users</a>
+{% endblock %}
+
+{% block content %}
+
+    <p class="h4 font-weight-normal pl-2 text-light">Les utilisateurs</p>
+    <div class="table-responsive overflow-scroll">
+        <table class="table table-bordered bg-light">
+            <thead class="thead-dark ">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Firstname</th>
+                    <th scope="col">Lastname</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">User Type</th>
+                    <th scope="col">Date de création</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    {% if user.user_type == 1 %}
+                    <tr class="text-danger font-weight-bold">
+                    {% else %}
+                    <tr>
+                    {% endif %}
+                    
+                        <th scope="row">{{ user.id|e }}</th>
+                        <td>{{ user.firstname|e }}</td>
+                        <td>{{ user.lastname|e }}</td>
+                        <td>{{ user.email|e }}</td>
+                        <td>
+                            {% if user.user_type == 1 %}
+                            Admin
+                            {% else %}
+                            No Admin
+                            {% endif %}
+                        </td>
+                        <td>{{ user.date_creation|e }}</td>
+                        <td>
+                            <a href="{{ url('gestionUsersShow', [user.id]) }}" class="btn btn-primary" role="button">Voir</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}

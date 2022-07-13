@@ -1,0 +1,45 @@
+{% extends "layoutAdmin.html" %}
+
+{% block nav %}
+    
+    <a href="{{ url('gestionPosts') }}" class="list-group-item list-group-item-action text-light bg-dark activAdmin">Gestion Articles</a>
+    <a href="{{ url('gestionComments') }}" class="list-group-item list-group-item-action text-light bg-dark ">Gestion Comments</a>
+    <a href="{{ url('gestionUsers') }}" class="list-group-item list-group-item-action text-light bg-dark">Gestion Users</a>
+{% endblock %}
+
+{% block content %}
+<a href="{{ url('gestionPosts/new') }}"  class="btn btn-info m-1 mb-4">Ajouter un article</a>
+<hr class="border-light">
+
+<p class="h4 font-weight-normal pl-2 text-light">Les articles</p>
+<div class="table-responsive overflow-scroll">
+    <table class="table table-bordered bg-light">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Chapo</th>
+                <th scope="col">Date de création</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <th scope="row">{{ post.id|e }}</th>
+                <td>{{ post.title|e }}</td>
+                <td>{{ post.chapo|e }}</td>
+                <td>{{ post.dateCreation|e }}</td>
+                <td>{{ post.user().lastname() }}</td>
+                <td>
+                    <a href="{{ url('gestionPostsShow', [post.id]) }}" class="btn btn-primary m-1" role="button">Voir</a>
+                </td>
+            </tr>
+                
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

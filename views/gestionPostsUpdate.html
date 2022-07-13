@@ -1,0 +1,44 @@
+{% extends "layoutAdmin.html" %}
+
+{% block nav %}
+	<a href="{{ url('gestionPosts') }}" class="list-group-item list-group-item-action text-light bg-dark activAdmin">Gestion Articles</a>
+	<a href="{{ url('gestionComments') }}" class="list-group-item list-group-item-action text-light bg-dark ">Gestion Comments</a>
+	<a href="{{ url('gestionUsers') }}" class="list-group-item list-group-item-action text-light bg-dark">Gestion Users</a>
+{% endblock %}
+
+{% block content %}
+
+	<a href="{{ url('gestionPostsShow', [post.id]) }}" class="btn btn-dark mb-4">Retour</a>
+	<form action="{{ url('gestionPosts/update', [post.id]) }}" method="POST" class="bg-light p-4 rounded">
+
+		<div class="form-group">
+			<label for="title">Titre</label>
+			<input type="text" name="title" class="form-control" value="{{ post.title }}">
+		</div>
+		<div class="form-group">
+			<label for="chapo">Extrait</label>
+			<textarea name="chapo" id="chapo" cols="30" rows="4" class="form-control">{{post.chapo}}</textarea>
+		</div>
+		<div class="form-group">
+			<label for="content">Contenu</label>
+			<textarea name="content" id="content" cols="30" rows="15" class="form-control">{{ post.content }}</textarea>
+		</div>
+		<div class="form-group">
+			<label for="auteur">Auteur</label>
+			<select class="form-control" id="auteur" name="auteur">
+				{% for auteur in auteurs %}
+					{% if post.user_id == auteur.id %}
+						<option value="{{auteur.id}}" selected>{{ auteur.firstname }} {{ auteur.lastname }}</option>
+					{% else %}
+						<option value="{{auteur.id}}">{{ auteur.firstname }} {{ auteur.lastname }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Enregistrer</button>
+
+	</form>
+
+
+{% endblock %}

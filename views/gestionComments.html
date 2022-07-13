@@ -1,0 +1,58 @@
+{% extends "layoutAdmin.html" %}
+
+{% block nav %}
+	
+	<a href="{{ url('gestionPosts') }}" class="list-group-item list-group-item-action text-light bg-dark">Gestion Articles</a>
+	<a href="{{ url('gestionComments') }}" class="list-group-item list-group-item-action text-light bg-dark activAdmin">Gestion Comments</a>
+	<a href="{{ url('gestionUsers') }}" class="list-group-item list-group-item-action text-light bg-dark">Gestion Users</a>
+{% endblock %}
+
+{% block content %}
+
+
+	<p class="h4 font-weight-normal pl-2 text-light">Les commentaires</p>
+	<div class="table-responsive overflow-scroll">
+		<table class="table table-bordered bg-light">
+			<thead class="thead-dark ">
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Commentaire</th>
+					<th scope="col">Désactivé</th>
+					<th scope="col">Date de Création</th>
+
+					<th scope="col">Titre du post</th>
+					<th scope="col">Commenteur</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for comment in comments %}
+
+					<tr>
+						<th scope="row">{{ comment.id }}</th>
+						<td>{{ comment.content }}</td>
+						<td>
+                            {% if comment.disabled == 1 %}
+                            <a href="{{ url('gestionComments/disabled', [comment.id]) }}" class="btn btn-secondary " role="button">Activer</a>
+                            {% else %}
+                            <a href="{{ url('gestionComments/disabled', [comment.id]) }}" class="btn btn-secondary " role="button">Désactiver</a>
+                            {% endif %}
+                        </td>
+						<td>{{ comment.date_creation }}</td>
+
+						<td>
+							<a href="{{ url('gestionPostsShow', [comment.post().id()]) }}">{{ comment.post().title() }}</a>
+						</td>
+						<td>
+							<a href="{{ url('gestionUsersShow', [comment.user().id()]) }}">{{ comment.user().firstname() }}</a>
+						</td>
+						<td>
+							<a href="{{ url('gestionComments/delete', [comment.id]) }}" class="btn btn-danger" role="button">Supprimer</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

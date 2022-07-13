@@ -1,0 +1,87 @@
+{% extends "layoutAdmin.html" %}
+
+{% block nav %}
+    
+    <a href="{{ url('gestionPosts') }}" class="list-group-item list-group-item-action text-light bg-dark activAdmin">Gestion Articles</a>
+    <a href="{{ url('gestionComments') }}" class="list-group-item list-group-item-action text-light bg-dark ">Gestion Comments</a>
+    <a href="{{ url('gestionUsers') }}" class="list-group-item list-group-item-action text-light bg-dark">Gestion Users</a>
+{% endblock %}
+
+{% block content %}
+
+    <div class="mb-4">
+        <a href="{{ url('gestionPosts') }}" class="btn btn-dark m-1" role="button">Retour</a>
+        <a href="{{ url('gestionPosts/update', [post.id]) }}" class="btn btn-secondary m-1" role="button">Modifier</a>
+        <a href="{{ url('gestionPosts/delete', [post.id]) }}" class="btn btn-danger m-1 float-right" role="button">Supprimer</a>
+    </div>
+    <hr class="border-light">
+
+    <div class="card p-4">
+        <h1>{{ post.title }}</h1>
+        <p>Auteur : {{user.firstname}} {{ user.lastname }}</p>
+
+
+        <div class="mt-5">
+
+            <p>{{ post.content }}</p>
+
+        </div>
+
+        <div class="comment py-4">
+            <h4 class="text-info">Commentaires</h4>
+            {% if comments %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Content</th>
+                            <th scope="col">Disabled</th>
+                            <th scope="col">Date de création</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for comment in comments %}
+                            <tr>
+                                <th scope="row">{{ comment.id }}</th>
+                                <td>{{ comment.content }}</td>
+                                {% if comment.disabled == 1 %}
+                                    <td>Oui</td>
+                                {% else %}
+                                    <td>Non</td>
+                                {% endif %}
+                                <td>{{ comment.date_creation }}</td>
+                                <td>{{ comment.user().lastname() }}</td>
+                                <td >
+                                    <div class="btn-group" role="group">
+                                        {% if comment.disabled == 1 %}
+                                        <a href="{{ url('gestionComments/disabled', [comment.id]) }}" class="btn btn-secondary " role="button">Activer</a>
+                                        {% else %}
+                                        <a href="{{ url('gestionComments/disabled', [comment.id]) }}" class="btn btn-secondary " role="button">Désactiver</a>
+                                        {% endif %}
+                                        
+                                    </div>
+                                </td>
+                            </tr>
+
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            {% else %}
+
+                <article class="card p-2">
+                    <p class="m-0">Aucun commentaire</p>
+                </article>
+
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

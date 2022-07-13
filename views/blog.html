@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block nav %}
+    <ul class="navbar-nav">      
+        <li class="nav-item">
+            <a class="nav-link" href="{{url('home')}}">Accueil </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Porfolio</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url('blog') }}">Blog <span class="sr-only">(current)</span></a>
+        </li>
+        
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+    {% for post in posts %}
+
+    <article class="Regular shadow p-4 mt-4 text-light">
+        
+        <div class="card-body">
+            <p style="font-size: 1em;">Auteur : {{ post.user.firstname() }} {{ post.user.lastname() }} / Date : {{ post.dateUpdate }}</p>
+            <a href="post/{{post.id}}" class="card-title h3 text-decoration-none text-orange">{{ post.title }}</a>
+            <p class="card-text">{{ post.chapo }}</p>
+            <a href="post/{{post.id}}" class="btn btn-border-orange">Lire la suite</a>  
+        </div>
+       
+    </article>
+
+    {% endfor %}    
+
+{% endblock %}

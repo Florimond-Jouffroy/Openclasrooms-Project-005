@@ -1,0 +1,22 @@
+{
+    "name": "flori/openclassrooms-p5",
+    "authors": [
+        {
+            "name": "Florimond",
+            "email": "florimond.jouffroy@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "2.0",
+        "vlucas/phpdotenv": "^3.5"
+    },
+    "autoload": {
+        "psr-4":{
+            "Controllers\\" : "controllers/",
+            "Managers\\" : "models/managers/",
+            "Entities\\" : "models/entities/",
+            "App\\" : "app/",
+            "Middlewares\\" : "middlewares/"
+        }
+    }
+}
